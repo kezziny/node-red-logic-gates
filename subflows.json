@@ -1,0 +1,1391 @@
+[
+    {
+        "id": "994b3cb497214743",
+        "type": "subflow",
+        "name": "As trigger",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "be8a53ebb3eca0cb"
+                    },
+                    {
+                        "id": "c4762cd429821a66"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "a2ab7a5ea3dd9755",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 620,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "9941fabbc0130cdf",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#C7E9C0",
+        "icon": "node-red/trigger.svg",
+        "status": {
+            "x": 780,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "a3893dee4335c53b",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "be8a53ebb3eca0cb",
+        "type": "function",
+        "z": "994b3cb497214743",
+        "name": "Auto reset",
+        "func": "let timer = flow.get(node.id);\n\nif (timer) clearTimeout(timer);\n\nif (msg.payload) {\n    timer = setTimeout(() => {\n        node.send({payload: false});\n    }, 150);\n}\n\nflow.set(node.id, timer);\n\nif (msg.payload) {\n    return { payload: true };\n} else {\n    return { payload: false};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(node.id, null);",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 60,
+        "wires": [
+            [
+                "a2ab7a5ea3dd9755"
+            ]
+        ]
+    },
+    {
+        "id": "c4762cd429821a66",
+        "type": "subflow:23f4cee4a2e3cc55",
+        "z": "994b3cb497214743",
+        "name": "",
+        "x": 170,
+        "y": 120,
+        "wires": [
+            [
+                "df959a9b79d9f134"
+            ]
+        ]
+    },
+    {
+        "id": "df959a9b79d9f134",
+        "type": "function",
+        "z": "994b3cb497214743",
+        "name": "Auto reset",
+        "func": "let timer = flow.get(node.id);\n\nif (timer) clearTimeout(timer);\n\nif (msg.payload) {\n    timer = setTimeout(() => {\n        node.send({payload: false});\n    }, 150);\n}\n\nflow.set(node.id, timer);\n\nif (msg.payload) {\n    return { payload: true };\n} else {\n    return { payload: false};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(node.id, null);",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 120,
+        "wires": [
+            [
+                "9941fabbc0130cdf"
+            ]
+        ]
+    },
+    {
+        "id": "a3893dee4335c53b",
+        "type": "function",
+        "z": "994b3cb497214743",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "9941fabbc0130cdf",
+        "type": "function",
+        "z": "994b3cb497214743",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(node.id);\n\nif (msg.payload !== previous) {\n    flow.set(node.id, msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(node.id, null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 120,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "a2ab7a5ea3dd9755",
+        "type": "function",
+        "z": "994b3cb497214743",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(node.id);\n\nif (msg.payload !== previous) {\n    flow.set(node.id, msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(node.id, null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 60,
+        "wires": [
+            [
+                "a3893dee4335c53b"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "2e54c6ce4bd79cc9",
+        "type": "subflow",
+        "name": "Filter",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "853ab843ec579ef7"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 600,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "471c9d8595cd120e",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "key",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "label": {
+                        "en-US": "Key"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "initial",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "label": {
+                        "en-US": "Initial value"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "bool",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-filter",
+        "status": {
+            "x": 600,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "78d4363fe49071a6",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "caf438c84fbac348",
+        "type": "inject",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.01",
+        "topic": "",
+        "x": 55,
+        "y": 100,
+        "wires": [
+            [
+                "700b868c59d56577"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "853ab843ec579ef7",
+        "type": "function",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "Extract value",
+        "func": "let key = env.get(\"key\");\nlet value = msg.payload;\n\nif (key) {\n    if (value.hasOwnProperty(key)) {\n        value = value[key];\n    } else {\n        value = undefined;\n    }\n}\n\nmsg.payload = value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "30e1ab6c5f1fa363"
+            ]
+        ],
+        "icon": "font-awesome/fa-file-zip-o"
+    },
+    {
+        "id": "700b868c59d56577",
+        "type": "function",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "Initial value",
+        "func": "let initial = env.get(\"initial\");\n\nif (initial !== null) {\n    if (initial) {\n        return { payload: true };\n    } else {\n        return { payload: false };\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "30e1ab6c5f1fa363"
+            ]
+        ],
+        "icon": "node-red/cog.svg"
+    },
+    {
+        "id": "78d4363fe49071a6",
+        "type": "function",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "Status",
+        "func": "let key = env.get(\"key\");\nlet value = env.get(\"value\");\n\nlet text = \"this == \";\nif (key) {\n    text = key + \" == \";\n}\ntext += value;\n\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": text\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 490,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "30e1ab6c5f1fa363",
+        "type": "function",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "Filter",
+        "func": "if (msg.payload === true || msg.payload === false) {\n    flow.set(\"open\", msg.payload);\n    return [msg, null];\n} else {\n    let isOpen = flow.get(\"open\");\n    if (isOpen) return [null, msg];\n}\n\nreturn null;",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "flow.set(\"open\", false);",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 60,
+        "wires": [
+            [
+                "78d4363fe49071a6"
+            ],
+            [
+                "471c9d8595cd120e"
+            ]
+        ]
+    },
+    {
+        "id": "471c9d8595cd120e",
+        "type": "function",
+        "z": "2e54c6ce4bd79cc9",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(\"previous\");\n\nif (msg.payload !== previous) {\n    flow.set(\"previous\", msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"previous\", null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 80,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "52fc344a.031a0c",
+        "type": "subflow",
+        "name": "Then",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "be6ffbe8e058c26c"
+                    },
+                    {
+                        "id": "5dd701986d58181f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 300,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5dd701986d58181f",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "payload",
+                "type": "json",
+                "value": "null",
+                "ui": {
+                    "label": {
+                        "en-US": "Override payload"
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-arrow-right",
+        "status": {
+            "x": 300,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "be6ffbe8e058c26c",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "5dd701986d58181f",
+        "type": "function",
+        "z": "52fc344a.031a0c",
+        "name": "Override",
+        "func": "let payload = env.get(\"payload\");\n\nif (msg.payload && payload !== null) {\n    msg.payload = payload;\n} else {\n    msg = null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 80,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-pencil-square-o"
+    },
+    {
+        "id": "be6ffbe8e058c26c",
+        "type": "function",
+        "z": "52fc344a.031a0c",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e8e8ddc7.c1829",
+        "type": "subflow",
+        "name": "Or",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "7ca32da17489b944"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "b7ad66101407e6bf",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 620,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "5ec3764c8d2daaf5",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#FFCC66",
+        "icon": "font-awesome/fa-minus",
+        "status": {
+            "x": 780,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "28d8e2ec08d1ed35",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "7ca32da17489b944",
+        "type": "function",
+        "z": "e8e8ddc7.c1829",
+        "name": "Store inputs",
+        "func": "var inputs = flow.get(\"inputs\");\n\ninputs[msg.src] = msg.payload;\nflow.set(\"inputs\", inputs);\n\nif (Object.keys(inputs).length < 2) return null;\n\nreturn { payload: inputs};",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"inputs\", {});",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "e6b714845b26058b"
+            ]
+        ],
+        "icon": "node-red/leveldb.png"
+    },
+    {
+        "id": "e6b714845b26058b",
+        "type": "function",
+        "z": "e8e8ddc7.c1829",
+        "name": "Or",
+        "func": "let count = 0;\n\nObject.keys(msg.payload).forEach( \n    (key, value) => {\n        if (msg.payload[key]) count++;\n    } \n);\n\nif (count > 0) {\n    return { payload: true };\n} else { \n    return { payload: false };\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "5ec3764c8d2daaf5",
+                "b7ad66101407e6bf"
+            ]
+        ],
+        "icon": "font-awesome/fa-minus"
+    },
+    {
+        "id": "28d8e2ec08d1ed35",
+        "type": "function",
+        "z": "e8e8ddc7.c1829",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5ec3764c8d2daaf5",
+        "type": "subflow:23f4cee4a2e3cc55",
+        "z": "e8e8ddc7.c1829",
+        "name": "",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b7ad66101407e6bf",
+        "type": "function",
+        "z": "e8e8ddc7.c1829",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(\"previous\");\n\nif (msg.payload !== previous) {\n    flow.set(\"previous\", msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"previous\", null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "28d8e2ec08d1ed35"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "3b7505cb.baaa3a",
+        "type": "subflow",
+        "name": "And",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 100,
+                "wires": [
+                    {
+                        "id": "c8e962d6.a64d6"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 620,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "aa98adbff0f141bb",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 620,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "56993b30eb911b1a",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "Debounce ms",
+                "type": "num",
+                "value": "100"
+            },
+            {
+                "name": "Equals",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Below",
+                "type": "str",
+                "value": ""
+            },
+            {
+                "name": "Above",
+                "type": "str",
+                "value": ""
+            }
+        ],
+        "meta": {},
+        "color": "#FFCC66",
+        "icon": "font-awesome/fa-plus",
+        "status": {
+            "x": 780,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "db2647323a61e20e",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "c8e962d6.a64d6",
+        "type": "function",
+        "z": "3b7505cb.baaa3a",
+        "name": "Store inputs",
+        "func": "var inputs = flow.get(\"inputs\");\n\ninputs[msg.src] = msg.payload;\nflow.set(\"inputs\", inputs);\n\nreturn { payload: inputs };",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"inputs\", {});",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "c78321a9bb9afa34"
+            ]
+        ],
+        "icon": "node-red/leveldb.png"
+    },
+    {
+        "id": "c78321a9bb9afa34",
+        "type": "function",
+        "z": "3b7505cb.baaa3a",
+        "name": "And",
+        "func": "let count = 0;\n\nObject.keys(msg.payload).forEach( \n    (key, value) => {\n        if (!msg.payload[key]) count++;\n    } \n);\n\nif (count > 0) {\n    return { payload: false };\n} else { \n    return { payload: true };\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 100,
+        "wires": [
+            [
+                "56993b30eb911b1a",
+                "aa98adbff0f141bb"
+            ]
+        ],
+        "icon": "font-awesome/fa-plus"
+    },
+    {
+        "id": "db2647323a61e20e",
+        "type": "function",
+        "z": "3b7505cb.baaa3a",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "56993b30eb911b1a",
+        "type": "subflow:23f4cee4a2e3cc55",
+        "z": "3b7505cb.baaa3a",
+        "name": "",
+        "x": 490,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aa98adbff0f141bb",
+        "type": "function",
+        "z": "3b7505cb.baaa3a",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(\"previous\");\n\nif (msg.payload !== previous) {\n    flow.set(\"previous\", msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"previous\", null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 500,
+        "y": 80,
+        "wires": [
+            [
+                "db2647323a61e20e"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "a74e4c24.4de54",
+        "type": "subflow",
+        "name": "For",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "7427175cf83bfe61"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 660,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "adf14245217eb0cb",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "time",
+                "type": "num",
+                "value": "1800",
+                "ui": {
+                    "icon": "font-awesome/fa-clock-o",
+                    "label": {
+                        "en-US": "Seconds"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "num",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#C7E9C0",
+        "icon": "font-awesome/fa-clock-o",
+        "status": {
+            "x": 800,
+            "y": 60,
+            "wires": [
+                {
+                    "id": "12ec0958d8807710",
+                    "port": 0
+                },
+                {
+                    "id": "4916de39dcf5cc57",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "b5274b65e00e86d5",
+        "type": "inject",
+        "z": "a74e4c24.4de54",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.01",
+        "topic": "",
+        "x": 55,
+        "y": 100,
+        "wires": [
+            [
+                "43d4679ef75482a9"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "7427175cf83bfe61",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Extract value",
+        "func": "let key = env.get(\"key\");\nlet value = msg.payload;\n\nif (key) {\n    if (value.hasOwnProperty(key)) {\n        value = value[key];\n    } else {\n        value = undefined;\n    }\n}\n\nmsg.payload = value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 60,
+        "wires": [
+            [
+                "4970481bd02bab63"
+            ]
+        ],
+        "icon": "font-awesome/fa-file-zip-o"
+    },
+    {
+        "id": "43d4679ef75482a9",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Initial value",
+        "func": "let initial = env.get(\"initial\");\n\nif (initial !== null) {\n    if (initial) {\n        return { payload: true };\n    } else {\n        return { payload: false };\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 100,
+        "wires": [
+            [
+                "4970481bd02bab63"
+            ]
+        ],
+        "icon": "node-red/cog.svg"
+    },
+    {
+        "id": "adf14245217eb0cb",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Debounce+",
+        "func": "let debounce = flow.get(\"debounce\");\nlet debounceTimeout = env.get(\"time\");\n\nif (debounce) {\n    clearTimeout(debounce);\n}\n\nif (msg.payload) {\n    debounce = setTimeout(\n        () => { node.send(msg); }, \n        debounceTimeout * 1000\n    );\n    flow.set(\"debounce\", debounce);\n} else {\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "// Code added here will be run once\n// whenever the node is started.\nflow.set(\"debounce\", null);",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 100,
+        "wires": [
+            [
+                "12ec0958d8807710"
+            ]
+        ],
+        "icon": "font-awesome/fa-clock-o"
+    },
+    {
+        "id": "12ec0958d8807710",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4916de39dcf5cc57",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Status",
+        "func": "if (!msg.payload) return null;\n\nlet now = new Date();\n\nlet status = {\n    \"fill\": \"yellow\",\n    \"shape\": \"dot\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 510,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "4970481bd02bab63",
+        "type": "function",
+        "z": "a74e4c24.4de54",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(\"previous\");\n\nif (msg.payload !== previous) {\n    flow.set(\"previous\", msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"previous\", null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 80,
+        "wires": [
+            [
+                "4916de39dcf5cc57",
+                "adf14245217eb0cb"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "23f4cee4a2e3cc55",
+        "type": "subflow",
+        "name": "Not",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "72f76ce31b8caf6b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 440,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "0deaa29feb3dbbbe",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [],
+        "meta": {},
+        "color": "#FFCC66",
+        "icon": "font-awesome/fa-exclamation",
+        "status": {
+            "x": 600,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "a1f081dd183aba2f",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "a1f081dd183aba2f",
+        "type": "function",
+        "z": "23f4cee4a2e3cc55",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 470,
+        "y": 40,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "72f76ce31b8caf6b",
+        "type": "function",
+        "z": "23f4cee4a2e3cc55",
+        "name": "Inv",
+        "func": "msg.payload = !msg.payload;\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 60,
+        "wires": [
+            [
+                "0deaa29feb3dbbbe"
+            ]
+        ]
+    },
+    {
+        "id": "0deaa29feb3dbbbe",
+        "type": "function",
+        "z": "23f4cee4a2e3cc55",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(\"previous\");\n\nif (msg.payload !== previous) {\n    flow.set(\"previous\", msg.payload);\n\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(\"previous\", null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 60,
+        "wires": [
+            [
+                "a1f081dd183aba2f"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "23b3febb.bb2762",
+        "type": "subflow",
+        "name": "As bool",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "1ab1f14695f9c709"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 640,
+                "y": 120,
+                "wires": [
+                    {
+                        "id": "e0d438fd834ba874",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 640,
+                "y": 160,
+                "wires": [
+                    {
+                        "id": "e972c849a6eb9371",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "initial",
+                "type": "json",
+                "value": "null",
+                "ui": {
+                    "icon": "font-awesome/fa-hourglass-start",
+                    "label": {
+                        "en-US": "Initial value"
+                    }
+                }
+            },
+            {
+                "name": "key",
+                "type": "str",
+                "value": "",
+                "ui": {
+                    "icon": "font-awesome/fa-key",
+                    "label": {
+                        "en-US": "Key"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "env"
+                        ]
+                    }
+                }
+            },
+            {
+                "name": "value",
+                "type": "bool",
+                "value": "true",
+                "ui": {
+                    "label": {
+                        "en-US": "Value"
+                    },
+                    "type": "input",
+                    "opts": {
+                        "types": [
+                            "str",
+                            "num",
+                            "bool",
+                            "env"
+                        ]
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "outputLabels": [
+            "input or null",
+            ""
+        ],
+        "icon": "font-awesome/fa-question",
+        "status": {
+            "x": 800,
+            "y": 80,
+            "wires": [
+                {
+                    "id": "aa5e886fe76854aa",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "9777ed65.1e9f4",
+        "type": "inject",
+        "z": "23b3febb.bb2762",
+        "name": "",
+        "props": [],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.01",
+        "topic": "",
+        "x": 55,
+        "y": 160,
+        "wires": [
+            [
+                "1b7f3b24ce0419bc"
+            ]
+        ],
+        "l": false
+    },
+    {
+        "id": "1ab1f14695f9c709",
+        "type": "function",
+        "z": "23b3febb.bb2762",
+        "name": "Extract value",
+        "func": "let key = env.get(\"key\");\nlet value = msg.payload;\n\nif (key) {\n    if (value.hasOwnProperty(key)) {\n        value = value[key];\n    } else {\n        value = undefined;\n    }\n}\n\nmsg.payload = value;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 120,
+        "wires": [
+            [
+                "ba2d4152078f15e8"
+            ]
+        ],
+        "icon": "font-awesome/fa-file-zip-o"
+    },
+    {
+        "id": "ba2d4152078f15e8",
+        "type": "function",
+        "z": "23b3febb.bb2762",
+        "name": "Compare",
+        "func": "let value = env.get(\"value\");\nlet inverse = msg;\n\nif (msg.payload === value) {\n    return {payload: true};\n} else {\n    return {payload: false};\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 360,
+        "y": 120,
+        "wires": [
+            [
+                "e0d438fd834ba874",
+                "e972c849a6eb9371"
+            ]
+        ],
+        "icon": "font-awesome/fa-arrows-h"
+    },
+    {
+        "id": "e0d438fd834ba874",
+        "type": "function",
+        "z": "23b3febb.bb2762",
+        "name": "Unique",
+        "func": "msg.src = node.id;\n\nlet previous = flow.get(node.id);\n\nif (msg.payload !== previous) {\n    flow.set(node.id, msg.payload);\n    \n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "flow.set(node.id, null);\n",
+        "finalize": "",
+        "libs": [],
+        "x": 520,
+        "y": 120,
+        "wires": [
+            [
+                "aa5e886fe76854aa"
+            ]
+        ],
+        "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "1b7f3b24ce0419bc",
+        "type": "function",
+        "z": "23b3febb.bb2762",
+        "name": "Initial value",
+        "func": "let initial = env.get(\"initial\");\n\nif (initial !== null) {\n    if (initial) {\n        return { payload: true };\n    } else {\n        return { payload: false };\n    }\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 190,
+        "y": 160,
+        "wires": [
+            [
+                "ba2d4152078f15e8"
+            ]
+        ],
+        "icon": "node-red/cog.svg"
+    },
+    {
+        "id": "aa5e886fe76854aa",
+        "type": "function",
+        "z": "23b3febb.bb2762",
+        "name": "Status",
+        "func": "let now = new Date();\nlet key = env.get(\"key\");\nlet value = env.get(\"value\");\n\nlet text = \"msg == \";\nif (key) {\n    text = \"msg.\" + key + \" == \";\n}\ntext += value;\n\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 670,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e972c849a6eb9371",
+        "type": "subflow:23f4cee4a2e3cc55",
+        "z": "23b3febb.bb2762",
+        "name": "",
+        "x": 510,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5be1df9bfb4610ad",
+        "type": "subflow:23b3febb.bb2762",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 140,
+        "y": 80,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ae49dfbf2a3aeab0",
+        "type": "subflow:a74e4c24.4de54",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 470,
+        "y": 80,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "58d7a8691a701fb2",
+        "type": "subflow:3b7505cb.baaa3a",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 310,
+        "y": 80,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "a95999096b3d8ba8",
+        "type": "subflow:e8e8ddc7.c1829",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 310,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "463bd26264d8059c",
+        "type": "subflow:52fc344a.031a0c",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 130,
+        "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8e4a6d4e96a6311e",
+        "type": "subflow:23f4cee4a2e3cc55",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 310,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "96b086886fb37727",
+        "type": "subflow:2e54c6ce4bd79cc9",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 130,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90e8f27619cc3ad6",
+        "type": "subflow:994b3cb497214743",
+        "z": "534bcabfdfd6bf67",
+        "name": "",
+        "x": 480,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    }
+]
