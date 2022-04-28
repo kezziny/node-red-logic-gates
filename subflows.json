@@ -359,99 +359,6 @@
         "icon": "font-awesome/fa-bookmark"
     },
     {
-        "id": "52fc344a.031a0c",
-        "type": "subflow",
-        "name": "Then",
-        "info": "",
-        "category": "Logic",
-        "in": [
-            {
-                "x": 60,
-                "y": 60,
-                "wires": [
-                    {
-                        "id": "be6ffbe8e058c26c"
-                    },
-                    {
-                        "id": "5dd701986d58181f"
-                    }
-                ]
-            }
-        ],
-        "out": [
-            {
-                "x": 300,
-                "y": 80,
-                "wires": [
-                    {
-                        "id": "5dd701986d58181f",
-                        "port": 0
-                    }
-                ]
-            }
-        ],
-        "env": [
-            {
-                "name": "payload",
-                "type": "json",
-                "value": "null",
-                "ui": {
-                    "label": {
-                        "en-US": "Override payload"
-                    }
-                }
-            }
-        ],
-        "meta": {},
-        "color": "#3FADB5",
-        "icon": "font-awesome/fa-arrow-right",
-        "status": {
-            "x": 300,
-            "y": 40,
-            "wires": [
-                {
-                    "id": "be6ffbe8e058c26c",
-                    "port": 0
-                }
-            ]
-        }
-    },
-    {
-        "id": "5dd701986d58181f",
-        "type": "function",
-        "z": "52fc344a.031a0c",
-        "name": "Override",
-        "func": "let payload = env.get(\"payload\");\n\nif (msg.payload && payload !== null) {\n    msg.payload = payload;\n} else {\n    msg = null;\n}\n\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 180,
-        "y": 80,
-        "wires": [
-            []
-        ],
-        "icon": "font-awesome/fa-pencil-square-o"
-    },
-    {
-        "id": "be6ffbe8e058c26c",
-        "type": "function",
-        "z": "52fc344a.031a0c",
-        "name": "Status",
-        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
-        "outputs": 1,
-        "noerr": 0,
-        "initialize": "",
-        "finalize": "",
-        "libs": [],
-        "x": 170,
-        "y": 40,
-        "wires": [
-            []
-        ]
-    },
-    {
         "id": "e8e8ddc7.c1829",
         "type": "subflow",
         "name": "Or",
@@ -593,6 +500,99 @@
             ]
         ],
         "icon": "font-awesome/fa-bookmark"
+    },
+    {
+        "id": "52fc344a.031a0c",
+        "type": "subflow",
+        "name": "Then",
+        "info": "",
+        "category": "Logic",
+        "in": [
+            {
+                "x": 60,
+                "y": 60,
+                "wires": [
+                    {
+                        "id": "be6ffbe8e058c26c"
+                    },
+                    {
+                        "id": "5dd701986d58181f"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 300,
+                "y": 80,
+                "wires": [
+                    {
+                        "id": "5dd701986d58181f",
+                        "port": 0
+                    }
+                ]
+            }
+        ],
+        "env": [
+            {
+                "name": "payload",
+                "type": "json",
+                "value": "null",
+                "ui": {
+                    "label": {
+                        "en-US": "Override payload"
+                    }
+                }
+            }
+        ],
+        "meta": {},
+        "color": "#3FADB5",
+        "icon": "font-awesome/fa-arrow-right",
+        "status": {
+            "x": 300,
+            "y": 40,
+            "wires": [
+                {
+                    "id": "be6ffbe8e058c26c",
+                    "port": 0
+                }
+            ]
+        }
+    },
+    {
+        "id": "5dd701986d58181f",
+        "type": "function",
+        "z": "52fc344a.031a0c",
+        "name": "Override",
+        "func": "let payload = env.get(\"payload\");\n\nif (msg.payload && payload !== null) {\n    msg.payload = payload;\n} else {\n    msg = null;\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 180,
+        "y": 80,
+        "wires": [
+            []
+        ],
+        "icon": "font-awesome/fa-pencil-square-o"
+    },
+    {
+        "id": "be6ffbe8e058c26c",
+        "type": "function",
+        "z": "52fc344a.031a0c",
+        "name": "Status",
+        "func": "let now = new Date();\n\nlet status = {\n    \"fill\": msg.payload ? \"green\" : \"red\",\n    \"shape\": msg.payload ? \"dot\" : \"ring\",\n    \"text\": now.toLocaleString(\"hu-HU\").substring(14)\n}\n\nmsg.payload = status;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 170,
+        "y": 40,
+        "wires": [
+            []
+        ]
     },
     {
         "id": "3b7505cb.baaa3a",
@@ -1297,46 +1297,34 @@
         ]
     },
     {
-        "id": "5be1df9bfb4610ad",
+        "id": "c33df025226939b4",
         "type": "subflow:23b3febb.bb2762",
-        "z": "534bcabfdfd6bf67",
+        "z": "61a325d40d3ee66d",
         "name": "",
-        "x": 140,
-        "y": 80,
+        "x": 100,
+        "y": 40,
         "wires": [
             [],
             []
         ]
     },
     {
-        "id": "ae49dfbf2a3aeab0",
+        "id": "c5ca84b468d25ad8",
         "type": "subflow:a74e4c24.4de54",
-        "z": "534bcabfdfd6bf67",
+        "z": "61a325d40d3ee66d",
         "name": "",
-        "x": 470,
+        "x": 90,
         "y": 80,
         "wires": [
             []
         ]
     },
     {
-        "id": "58d7a8691a701fb2",
+        "id": "fb97df875c2b61ee",
         "type": "subflow:3b7505cb.baaa3a",
-        "z": "534bcabfdfd6bf67",
+        "z": "61a325d40d3ee66d",
         "name": "",
-        "x": 310,
-        "y": 80,
-        "wires": [
-            [],
-            []
-        ]
-    },
-    {
-        "id": "a95999096b3d8ba8",
-        "type": "subflow:e8e8ddc7.c1829",
-        "z": "534bcabfdfd6bf67",
-        "name": "",
-        "x": 310,
+        "x": 90,
         "y": 120,
         "wires": [
             [],
@@ -1344,45 +1332,57 @@
         ]
     },
     {
-        "id": "463bd26264d8059c",
+        "id": "4494f6a6a09605da",
         "type": "subflow:52fc344a.031a0c",
-        "z": "534bcabfdfd6bf67",
+        "z": "61a325d40d3ee66d",
         "name": "",
-        "x": 130,
-        "y": 120,
+        "x": 250,
+        "y": 40,
         "wires": [
             []
         ]
     },
     {
-        "id": "8e4a6d4e96a6311e",
+        "id": "5b3f6ce5fedbc885",
+        "type": "subflow:e8e8ddc7.c1829",
+        "z": "61a325d40d3ee66d",
+        "name": "",
+        "x": 250,
+        "y": 120,
+        "wires": [
+            [],
+            []
+        ]
+    },
+    {
+        "id": "65f9bb48f0e51afb",
         "type": "subflow:23f4cee4a2e3cc55",
-        "z": "534bcabfdfd6bf67",
+        "z": "61a325d40d3ee66d",
         "name": "",
-        "x": 310,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "96b086886fb37727",
-        "type": "subflow:2e54c6ce4bd79cc9",
-        "z": "534bcabfdfd6bf67",
-        "name": "",
-        "x": 130,
-        "y": 160,
-        "wires": [
-            []
-        ]
-    },
-    {
-        "id": "90e8f27619cc3ad6",
-        "type": "subflow:994b3cb497214743",
-        "z": "534bcabfdfd6bf67",
-        "name": "",
-        "x": 480,
+        "x": 410,
         "y": 120,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "dc788f35eae2abef",
+        "type": "subflow:2e54c6ce4bd79cc9",
+        "z": "61a325d40d3ee66d",
+        "name": "",
+        "x": 90,
+        "y": 160,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "e2eddfbc396dfcb6",
+        "type": "subflow:994b3cb497214743",
+        "z": "61a325d40d3ee66d",
+        "name": "",
+        "x": 260,
+        "y": 160,
         "wires": [
             [],
             []
